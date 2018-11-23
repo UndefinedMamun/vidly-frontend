@@ -1,0 +1,49 @@
+<mat-toolbar>
+  <button (click)="openMovieAddDialog()" mat-raised-button style="margin-left: 10px">Add New</button>
+  <button (click)="drawer.toggle()" mat-mini-fab color="accent" id="searchButton">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-toolbar>
+
+
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer class="sidenav" position="end" mode="side">
+    <mat-form-field class="full-width">
+      <input type="text" matInput placeholder="Search">
+    </mat-form-field>
+
+    <h4>Filter Genre</h4>
+
+    <mat-selection-list #genre>
+      <mat-list-option>
+        Genre
+      </mat-list-option>
+      <mat-list-option>
+        Genre
+      </mat-list-option>
+      <mat-list-option>
+        Genre
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-drawer>
+
+  <div class="container-fluid">
+    <mat-card class="movie">
+      <img class="img-responsive img-rounded movie-image" src="../../../assets/default-placeholder.png">
+      <div class="movie-info">
+        <mat-card-title>Movie Name</mat-card-title>
+        <mat-card-subtitle>Genre, Genre</mat-card-subtitle>
+        <mat-card-content>
+          <p>In Stock: <span>5</span></p>
+          <p>Daily Rental Rate: <span>5</span></p>
+        </mat-card-content>
+        <mat-card-actions class="movie-actions">
+          <button (click)="openMovieEditDialog()" mat-raised-button class="btn-info">Edit</button>
+          <button mat-raised-button class="btn-danger">Delete</button>
+        </mat-card-actions>
+      </div>
+    </mat-card>
+
+  </div>
+
+</mat-drawer-container>

@@ -1,0 +1,36 @@
+<mat-toolbar>
+  <button (click)="openCustomerAddDialog()" mat-raised-button style="margin-left: 10px">Add New</button>
+  <input (keyup)="applyFilter($event.target.value)" type="text" id="search" class="form-control" placeholder="Search">
+</mat-toolbar>
+
+
+<div class="container-fluid">
+  <table class="app-table" mat-table [dataSource]="dataSource">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Phone Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef id="action"> Actions </th>
+      <td mat-cell *matCellDef="let element" style="text-align: center">
+        <button mat-raised-button (click)="editCustomer(element)" color="accent" style="margin-right: 5px">Edit</button>
+        <button mat-raised-button (click)="deleteCustomer(element)" class="btn-danger">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[8, 12, 15]" showFirstLastButtons></mat-paginator>
+</div>

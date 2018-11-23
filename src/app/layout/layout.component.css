@@ -1,0 +1,33 @@
+  .drawer-container {
+    height: calc(100vh - 64px);
+  }
+  
+  .content {
+    display: flex;
+    height: 100%;
+    /* align-items: center;
+    justify-content: center; */
+  }
+  
+  .sidenav {
+    /* padding: 20px; */
+    width: 200px;
+    /* background-color: royalblue; */
+  }
+
+  .sidenav button.active{
+      background-color: #ddd;
+  }
+
+  .menu-container{
+    padding: 10px
+  }
+
+  .menu-container p{
+    margin: 0;
+  }
+
+
+  #userButton, #cartButton{
+    margin-left: auto;
+  }

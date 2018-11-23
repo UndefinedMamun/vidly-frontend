@@ -1,0 +1,12 @@
+:host{
+    width: 100%;
+}
+
+#search{
+    margin: 0 20px
+}
+
+#action{
+    text-align: center;
+    width: 200px;
+}

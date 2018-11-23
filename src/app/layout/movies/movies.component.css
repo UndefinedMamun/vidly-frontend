@@ -1,0 +1,44 @@
+:host{
+    width: 100%;
+}
+
+.sidenav{
+    width: 250px;
+    padding: 15px;
+}
+
+#searchButton{
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.drawer-container{
+    height: calc(100% - 64px);
+}
+
+.container-fluid{
+    /* padding-top: 10px;
+    min-height: 100%; */
+}
+
+
+
+.movie{
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.movie-image{
+    width: 150px;
+    float: left;
+    margin-right: 15px;
+}
+
+.movie-info p{
+    margin: 0
+}
+.movie-actions{
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+}

@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+  <button type="button" mat-button (click)="drawer.toggle()">
+    <mat-icon>vertical_split</mat-icon>
+  </button>
+
+
+  <button id="userButton" mat-icon-button [matMenuTriggerFor]="user">
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #user="matMenu">
+    <div class="menu-container">
+      <p><strong>Mr. Omuk</strong></p>
+      <p><span>email@gmail.com</span></p>
+      <button routerLink="/me" mat-button>View</button>
+      <button routerLink="/me/edit" mat-button>Edit</button>
+      <button (click)="logout()" mat-button>Log Out</button>
+    </div>
+  </mat-menu>
+
+  <button id="cartButton" mat-icon-button [matMenuTriggerFor]="cart">
+    <mat-icon>shop</mat-icon>
+  </button>
+  <mat-menu #cart="matMenu">
+    <div class="menu-container">
+      <button routerLink="/cart" mat-button>View Cart</button>
+      <button mat-button>CheckOut</button>
+    </div>
+  </mat-menu>
+</mat-toolbar>
+
+
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer class="sidenav" opened mode="side">
+    <mat-action-list id="menu-list">
+      <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" pathMatch="full" routerLink="/"
+        mat-list-item> Dashboard </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/movies"> Movies </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/genres"> Genres </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/customers"> Customers </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/rentals"> Rentals </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/users"> Users </button>
+    </mat-action-list>
+  </mat-drawer>
+
+  <section class="content">
+    <router-outlet></router-outlet>
+
+  </section>
+
+</mat-drawer-container>

@@ -1,0 +1,18 @@
+:host{
+    width: 100%;
+}
+
+.top{
+    padding: 15px 15px 0 15px;
+    display: flex;
+}
+
+.top button{
+    margin: auto;
+    margin-left: 10px;
+}
+
+#action{
+    text-align: center;
+    width: 200px;
+}
