@@ -1,3 +1,4 @@
+import { AuthGuardService } from './../guards/auth-guard.service';
 import { CartComponent } from './cart/cart.component';
 import { EditMeComponent } from './me/edit-me.component';
 import { ViewMeComponent } from './me/view-me.component';
@@ -14,7 +15,7 @@ import { GenresComponent } from './genres/genres.component';
 
 const routes: Routes = [
   {
-    path: '', component: LayoutComponent, children: [
+    path: '', component: LayoutComponent, canActivate: [AuthGuardService], children: [
       { path: '', component: DashboardComponent },
       { path: 'movies', component: MoviesComponent },
       { path: 'customers', component: CustomersComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
           { path: '', component: ViewMeComponent },
           { path: 'edit', component: EditMeComponent }
         ]
-      },
+      }
     ]
   }
 ];

@@ -3,13 +3,17 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: Http) {
+  constructor(
+    private http: Http,
+    public JwtHelper: JwtHelperService,
+    private router: Router) {
     // this.isLoggedIn()
   }
 
@@ -26,19 +30,11 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this.router.navigate(['/login'])
   }
 
   isLoggedIn() {
-    const helper = new JwtHelperService();
-    // helper.
-    let token = localStorage.getItem('token')
-
-    const decodedToken = helper.decodeToken(token);
-    const expirationDate = helper.getTokenExpirationDate(token);
-    const isExpired = helper.isTokenExpired(token);
-    console.log('Expiration', expirationDate)
-    console.log('isExpired', isExpired)
-    console.log('decodedToken', decodedToken)
-
+    // console.log(this.JwtHelper.isTokenExpired())
+    return !this.JwtHelper.isTokenExpired()
   }
 }
