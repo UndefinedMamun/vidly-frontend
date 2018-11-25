@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LayoutModule } from './layout/layout.module';
 import { LayoutComponent } from './layout/layout.component';
+import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     BrowserAnimationsModule,
     MaterialModule,
     HttpModule,
+    HttpClientModule,
     LayoutModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
@@ -38,7 +40,9 @@ import { JwtModule } from '@auth0/angular-jwt';
           return localStorage.getItem('token');
         },
         whitelistedDomains: ['localhost:3000'],
-        headerName: 'x-auth-token'
+        headerName: 'x-auth-token',
+        authScheme: ''
+
       }
     }),
 

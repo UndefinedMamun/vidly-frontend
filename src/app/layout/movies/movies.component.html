@@ -28,18 +28,18 @@
   </mat-drawer>
 
   <div class="container-fluid">
-    <mat-card class="movie">
+    <mat-card class="movie" *ngFor="let movie of movies">
       <img class="img-responsive img-rounded movie-image" src="../../../assets/default-placeholder.png">
       <div class="movie-info">
-        <mat-card-title>Movie Name</mat-card-title>
-        <mat-card-subtitle>Genre, Genre</mat-card-subtitle>
+        <mat-card-title>{{movie.title}}</mat-card-title>
+        <mat-card-subtitle class="genres"><span *ngFor="let genre of movie.genres; last as lastItem">{{genre.name}}{{!lastItem?",":""}}</span></mat-card-subtitle>
         <mat-card-content>
-          <p>In Stock: <span>5</span></p>
-          <p>Daily Rental Rate: <span>5</span></p>
+          <p>In Stock: <span>{{movie.numberInStock}}</span></p>
+          <p>Daily Rental Rate: <span>{{movie.dailyRentalRate}}</span></p>
         </mat-card-content>
         <mat-card-actions class="movie-actions">
-          <button (click)="openMovieEditDialog()" mat-raised-button class="btn-info">Edit</button>
-          <button mat-raised-button class="btn-danger">Delete</button>
+          <button (click)="openMovieEditDialog(movie)" mat-raised-button class="btn-info">Edit</button>
+          <button (click)="deleteMovie(movie)" mat-raised-button class="btn-danger">Delete</button>
         </mat-card-actions>
       </div>
     </mat-card>

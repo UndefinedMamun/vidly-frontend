@@ -10,6 +10,7 @@ import { MoviesService } from '../../services/movies.service'
   styleUrls: ['./movies.component.css']
 })
 export class MoviesComponent implements OnInit {
+  movies: any;
 
   constructor(
     private dialog: MatDialog,
@@ -17,12 +18,16 @@ export class MoviesComponent implements OnInit {
 
   ngOnInit() {
     this.service.getMovies()
+      .subscribe(movies => {
+        this.movies = movies;
+      })
   }
 
-  openMovieEditDialog() {
+  openMovieEditDialog(movie) {
     this.dialog.open(EditMovieComponent, {
       data: {
-        mode: 'Edit'
+        mode: 'Edit',
+        movie: movie
       }
     })
   }

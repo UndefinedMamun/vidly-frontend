@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     this.service.login(this.model)
       .subscribe(result => {
         let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-        console.log(returnUrl, "------********************")
         this.router.navigate([returnUrl || '/'])
       }
         , err => this.invalid = true)

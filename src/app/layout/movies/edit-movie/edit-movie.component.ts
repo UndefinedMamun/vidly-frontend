@@ -1,3 +1,7 @@
+import { Genre } from './../../../models/genre.model';
+import { Movie } from './../../../models/movie.model';
+import { GenresService } from './../../../services/genres.service';
+import { MoviesService } from './../../../services/movies.service';
 import { EditGenresComponent } from './../../genres/edit-genres/edit-genres.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
@@ -9,29 +13,40 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 })
 export class EditMovieComponent implements OnInit {
   mode: string;
+  genres = [];
+  originalMovie: Movie;
   movie = {
-    title: 'test',
-    genre: ["1", "2"],
-    numberInStock: 1,
-    dailyRentalRate: 1
+    title: '',
+    genres: [],
+    numberInStock: null,
+    dailyRentalRate: null
   }
 
-  genres = [
-    { id: 1, name: 'Red' },
-    { id: 2, name: 'Blue' },
-    { id: 3, name: 'White' },
-  ]
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditMovieComponent>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private service: GenresService
   ) {
 
   }
 
   ngOnInit() {
+    this.service.$genres
+      .subscribe(genres => {
+        this.genres = genres;
+      })
+    this.service.getGenres();
+
     this.mode = this.data.mode;
+    if (this.mode == 'Edit') {
+      this.originalMovie = this.data.movie;
+      this.movie.title = this.originalMovie.title;
+      this.movie.numberInStock = this.originalMovie.numberInStock;
+      this.movie.dailyRentalRate = this.originalMovie.dailyRentalRate;
+      this.movie.genres = this.originalMovie.genres.map(g => g._id)
+    }
   }
 
   submission() {

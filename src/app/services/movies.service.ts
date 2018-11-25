@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { server } from './global';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -6,14 +7,20 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class MoviesService {
-  url = server + '/api/movies';
+  private url = server + '/api/movies';
+  public movies: any;
+  public genres: any;
 
   constructor(private http: Http) { }
 
   getMovies() {
-    this.http.get(this.url)
-      .subscribe(res => {
-        console.log(res.json())
-      })
+    return this.http.get(this.url)
+      .pipe(
+        map(res => {
+          this.movies = res.json();
+          return this.movies;
+        })
+      )
   }
+
 }

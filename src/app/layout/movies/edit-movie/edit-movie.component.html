@@ -9,8 +9,8 @@
     </mat-form-field>
     <div id="genre">
       <mat-form-field>
-        <mat-select name="genre" [(ngModel)]="movie.genre" multiple placeholder="Genre">
-          <mat-option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</mat-option>
+        <mat-select name="genre" [(ngModel)]="movie.genres" multiple placeholder="Genre">
+          <mat-option *ngFor="let genre of genres" [value]="genre._id">{{genre.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <button type="button" (click)="openAddGenreModal()" mat-mini-fab>

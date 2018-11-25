@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatDialog, MatTableDataSource } from '@angular/material';
 import { EditCustomerComponent } from '../customers/edit-customer/edit-customer.component';
 import { EditGenresComponent } from './edit-genres/edit-genres.component';
+import { GenresService } from 'src/app/services/genres.service';
 
 @Component({
   selector: 'app-genres',
@@ -9,46 +10,42 @@ import { EditGenresComponent } from './edit-genres/edit-genres.component';
   styleUrls: ['./genres.component.css']
 })
 export class GenresComponent implements OnInit {
-
-  customers = [
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-  ];
-  displayedColumns: string[] = ['name', 'phone', 'action'];
+  displayedColumns: string[] = ['name', 'action'];
   dataSource;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private service: GenresService
+  ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.customers);
-    this.dataSource.paginator = this.paginator;
+    this.service.$genres
+      .subscribe(genres => {
+        this.dataSource = new MatTableDataSource(genres);
+        this.dataSource.paginator = this.paginator;
+      });
+
+    this.service.getGenres();
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCustomer(customer) {
+  editGenre(genre) {
     this.dialog.open(EditGenresComponent, {
       data: {
-        mode: 'Edit'
+        mode: 'Edit',
+        genre: genre
       }
     })
   }
 
-  deleteCustomer(customer) {
-    console.log(customer)
+  deleteGenre(genre) {
+    console.log(genre);
+    this.service.deleteGenre(genre);
   }
 
   openGenreAddDialog() {
