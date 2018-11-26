@@ -17,7 +17,7 @@ export class EditMovieComponent implements OnInit {
   originalMovie: Movie;
   movie = {
     title: '',
-    genres: [],
+    genreIds: [],
     numberInStock: null,
     dailyRentalRate: null
   }
@@ -27,17 +27,18 @@ export class EditMovieComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditMovieComponent>,
     private dialog: MatDialog,
-    private service: GenresService
+    private genreService: GenresService,
+    private moviesService: MoviesService
   ) {
 
   }
 
   ngOnInit() {
-    this.service.$genres
+    this.genreService.$genres
       .subscribe(genres => {
         this.genres = genres;
       })
-    this.service.getGenres();
+    this.genreService.getGenres();
 
     this.mode = this.data.mode;
     if (this.mode == 'Edit') {
@@ -45,12 +46,19 @@ export class EditMovieComponent implements OnInit {
       this.movie.title = this.originalMovie.title;
       this.movie.numberInStock = this.originalMovie.numberInStock;
       this.movie.dailyRentalRate = this.originalMovie.dailyRentalRate;
-      this.movie.genres = this.originalMovie.genres.map(g => g._id)
+      this.movie.genreIds = this.originalMovie.genres.map(g => g._id)
     }
   }
 
   submission() {
+    if (this.mode == "Add") {
+      this.moviesService.addMovie(this.movie);
+    } else {
+      this.moviesService.editMovie(this.originalMovie, this.movie);
+    }
+
     console.log(this.movie)
+
     this.dialogRef.close();
   }
 

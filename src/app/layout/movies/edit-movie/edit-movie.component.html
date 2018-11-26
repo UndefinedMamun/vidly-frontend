@@ -9,7 +9,7 @@
     </mat-form-field>
     <div id="genre">
       <mat-form-field>
-        <mat-select name="genre" [(ngModel)]="movie.genres" multiple placeholder="Genre">
+        <mat-select name="genre" [(ngModel)]="movie.genreIds" multiple placeholder="Genre">
           <mat-option *ngFor="let genre of genres" [value]="genre._id">{{genre.name}}</mat-option>
         </mat-select>
       </mat-form-field>

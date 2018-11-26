@@ -1,6 +1,8 @@
+import { Movie } from './../../models/movie.model';
+import { GenresService } from 'src/app/services/genres.service';
 import { Component, OnInit } from '@angular/core';
 import { EditMovieComponent } from './edit-movie/edit-movie.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSelectionList } from '@angular/material';
 
 import { MoviesService } from '../../services/movies.service'
 
@@ -11,16 +13,49 @@ import { MoviesService } from '../../services/movies.service'
 })
 export class MoviesComponent implements OnInit {
   movies: any;
+  genres: any;
+  searchString: string;
+  selectedGenres: any;
 
   constructor(
     private dialog: MatDialog,
-    private service: MoviesService) { }
+    private service: MoviesService,
+    private genreService: GenresService
+  ) { }
+
+  filterMovies(genres: MatSelectionList) {
+    if (this.searchString) {
+      this.movies = this.service.movies.filter((m: Movie) => m.title.toLowerCase().includes(this.searchString.toLowerCase()));
+    } else {
+      this.movies = this.service.movies;
+    }
+
+    if (genres.selectedOptions.selected.length == 0) return;
+
+    let selected = genres.selectedOptions.selected.map(obj => obj.value);
+
+    selected.forEach(_id => {
+      this.movies = this.movies.filter((m: Movie) => {
+        let ids = m.genres.map(g => g._id);
+        return ids.includes(_id)
+      })
+    })
+
+  }
+
+  demo(t) {
+    console.log(this.selectedGenres)
+  }
 
   ngOnInit() {
     this.service.getMovies()
       .subscribe(movies => {
         this.movies = movies;
       })
+
+    this.genreService.$genres
+      .subscribe(g => this.genres = g);
+    this.genreService.getGenres();
   }
 
   openMovieEditDialog(movie) {
@@ -30,6 +65,7 @@ export class MoviesComponent implements OnInit {
         movie: movie
       }
     })
+    this.movies = this.service.movies;
   }
 
   openMovieAddDialog() {
@@ -38,6 +74,11 @@ export class MoviesComponent implements OnInit {
         mode: 'Add'
       }
     })
+    this.movies = this.service.movies;
+  }
+
+  deleteMovie(movie) {
+    this.service.deleteMovie(movie);
   }
 
 }
