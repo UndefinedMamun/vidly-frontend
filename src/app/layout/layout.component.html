@@ -9,8 +9,8 @@
   </button>
   <mat-menu #user="matMenu">
     <div class="menu-container">
-      <p><strong>Mr. Omuk</strong></p>
-      <p><span>email@gmail.com</span></p>
+      <p><strong>{{me.name}}</strong></p>
+      <p><span>{{me.email}}</span></p>
       <button routerLink="/me" mat-button>View</button>
       <button routerLink="/me/edit" mat-button>Edit</button>
       <button (click)="logout()" mat-button>Log Out</button>

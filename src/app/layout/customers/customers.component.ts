@@ -1,3 +1,4 @@
+import { CustomerService } from './../../services/customer.service';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
@@ -8,29 +9,20 @@ import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
-  customers = [
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-    { name: 'Mr. Omuk', phone: '4556465464' },
-  ];
   displayedColumns: string[] = ['name', 'phone', 'action'];
   dataSource;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private service: CustomerService) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.customers);
-    this.dataSource.paginator = this.paginator;
+    this.service.customers$.subscribe(customers => {
+      this.dataSource = new MatTableDataSource(customers);
+      this.dataSource.paginator = this.paginator;
+    })
   }
 
   applyFilter(filterValue: string) {
@@ -40,13 +32,14 @@ export class CustomersComponent implements OnInit {
   editCustomer(customer) {
     this.dialog.open(EditCustomerComponent, {
       data: {
-        mode: 'Edit'
+        mode: 'Edit',
+        customer
       }
     })
   }
 
   deleteCustomer(customer) {
-    console.log(customer)
+    this.service.deleteCustomer(customer);
   }
 
   openCustomerAddDialog() {

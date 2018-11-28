@@ -1,5 +1,6 @@
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { UsresService } from '../services/usres.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,15 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
+  me = {}
 
-  constructor(private service: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private usersService: UsresService
+  ) { }
 
   ngOnInit() {
-    this.service.isLoggedIn()
+    this.authService.isLoggedIn();
+
+    this.usersService.me$.subscribe(me => {
+      this.me = me;
+    })
   }
 
   logout() {
-    this.service.logout();
+    this.authService.logout();
   }
 
 }

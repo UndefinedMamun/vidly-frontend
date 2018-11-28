@@ -1,3 +1,4 @@
+import { CustomerService } from './../../../services/customer.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 
@@ -13,23 +14,36 @@ import { Component, OnInit, Inject } from '@angular/core';
 })
 export class EditCustomerComponent implements OnInit {
   mode;
+  oldCustomer;
   customer = {
     name: '',
     phone: ''
   }
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<EditCustomerComponent>
+    public dialogRef: MatDialogRef<EditCustomerComponent>,
+    private service: CustomerService
   ) {
 
   }
 
   ngOnInit() {
     this.mode = this.data.mode;
+
+    if (this.mode == 'Edit') {
+      this.oldCustomer = this.data.customer;
+      this.customer.name = this.data.customer.name;
+      this.customer.phone = this.data.customer.phone;
+    }
   }
 
   submission() {
-    console.log(this.customer)
+    if (this.mode == 'Add') {
+      this.service.addCustomer(this.customer);
+    } else {
+      this.service.editCustomer(this.oldCustomer, this.customer);
+    }
+
     this.dialogRef.close()
   }
 

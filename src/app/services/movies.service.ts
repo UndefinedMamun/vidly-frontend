@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { server } from './global';
-import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -10,13 +10,13 @@ export class MoviesService {
   private url = server + '/api/movies/';
   public movies = [];
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   getMovies() {
     return this.http.get(this.url)
       .pipe(
-        map(res => {
-          this.movies = res.json();
+        map((res: any) => {
+          this.movies = res;
           return this.movies;
         })
       )
@@ -25,7 +25,7 @@ export class MoviesService {
   addMovie(movie) {
     this.http.post(this.url, movie)
       .subscribe(res => {
-        let newMovie = res.json()
+        let newMovie = res
         console.log(newMovie)
 
         this.movies.push(newMovie);
@@ -35,16 +35,16 @@ export class MoviesService {
   editMovie(oldMovie, newMovie) {
     this.http.put(this.url + oldMovie._id, newMovie)
       .subscribe(res => {
-        // console.log(res.json())
+        // console.log(res)
         let index = this.movies.indexOf(oldMovie);
-        this.movies[index] = res.json()
+        this.movies[index] = res
       })
   }
 
   deleteMovie(movie) {
     this.http.delete(this.url + movie._id)
       .subscribe(res => {
-        console.log(res.json())
+        console.log(res)
 
         let index = this.movies.indexOf(movie);
         this.movies.splice(index, 1);
