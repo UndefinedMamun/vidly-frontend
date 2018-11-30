@@ -35,6 +35,15 @@ export class AuthService {
 
   isLoggedIn() {
     // console.log(this.JwtHelper.isTokenExpired())
+    // let token = localStorage.getItem('token');
+    // console.log(token);
+    // let ed = this.JwtHelper.getTokenExpirationDate(token);
+    // console.log(ed)
+
+
+
     return !this.JwtHelper.isTokenExpired()
+
+
   }
 }

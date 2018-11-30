@@ -17,7 +17,7 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.isLoggedIn();
-
+    this.usersService.getMe();
     this.usersService.me$.subscribe(me => {
       this.me = me;
     })

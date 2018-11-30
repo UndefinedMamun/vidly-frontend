@@ -5,6 +5,8 @@
     justify-content: center;
 }
 
-#footerLink{
-    margin-top: 20px;
+#emailCheckingSpinner{
+    position: absolute;
+    right: 0;
+    bottom: 5px;
 }

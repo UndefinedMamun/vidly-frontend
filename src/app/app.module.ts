@@ -14,12 +14,18 @@ import { LayoutModule } from './layout/layout.module';
 import { LayoutComponent } from './layout/layout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { RegistrationComponent } from './registration/registration.component';
+import { IsPasswordMatchDirective } from './registration/is-password-match.directive';
+import { EmailAsyncValidatorDirective } from './registration/email-async-validator.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    RegistrationComponent,
+    IsPasswordMatchDirective,
+    EmailAsyncValidatorDirective
   ],
   imports: [
     BrowserModule,
@@ -31,6 +37,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     LayoutModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
+      { path: 'register', component: RegistrationComponent, pathMatch: 'full' },
       { path: '', loadChildren: './layout/layout.module#LayoutModule', pathMatch: 'full' },
       { path: '**', component: NotFoundComponent }
     ]),

@@ -1,3 +1,4 @@
+import { UsresService } from './../services/usres.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private service: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private userService: UsresService) { }
 
   ngOnInit() {
   }
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.service.login(this.model)
       .subscribe(result => {
         let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-        this.router.navigate([returnUrl || '/'])
+        this.router.navigate([returnUrl || '/']);
       }
         , err => this.invalid = true)
   }

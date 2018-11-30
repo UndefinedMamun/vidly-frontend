@@ -9,7 +9,7 @@ import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'phone', 'action'];
+  displayedColumns: string[] = ['name', 'phone', 'isGold', 'action'];
   dataSource;
 
   constructor(
@@ -20,6 +20,7 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit() {
     this.service.customers$.subscribe(customers => {
+      // console.log(customers)
       this.dataSource = new MatTableDataSource(customers);
       this.dataSource.paginator = this.paginator;
     })

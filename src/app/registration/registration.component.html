@@ -1,0 +1,59 @@
+<div class="container">
+  <mat-card class="text-center">
+    <mat-card-title>
+      Create your new account.
+    </mat-card-title>
+    <mat-card-subtitle>
+      Please fill the form bellow.
+    </mat-card-subtitle>
+
+
+    <form (ngSubmit)="createAccount(f)" #f="ngForm">
+      <mat-card-content>
+        <mat-form-field>
+          <input #name='ngModel' ngModel required minlength="5" maxlength="50" type="text" name="name" matInput
+            placeholder="Name">
+          <mat-hint>Your Full Name</mat-hint>
+          <mat-error *ngIf="name.invalid && name.errors.required">This field is required.</mat-error>
+          <mat-error *ngIf="name.invalid && name.errors.minlength">Name must be at least
+            {{name.errors.minlength.requiredLength}} charector.</mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-content>
+        <mat-form-field>
+          <input ngModel #email="ngModel" required type="email" EmailAsyncValidator matInput name="email" placeholder="Email">
+          <mat-hint>Your email address.</mat-hint>
+          <mat-error *ngIf="email.invalid && email.errors.required">This field is required.</mat-error>
+          <mat-error *ngIf="(email.invalid && email.touched) && email.errors?.taken">Email is already taken.</mat-error>
+          <mat-progress-spinner diameter="15" id="emailCheckingSpinner" *ngIf="email.pending" mode="indeterminate"></mat-progress-spinner>
+        </mat-form-field>
+      </mat-card-content>
+      <div #passwords="ngModelGroup" ngModelGroup="passwords" IsPasswordMatch>
+        <mat-card-content>
+          <mat-form-field>
+            <input ngModel #password="ngModel" required minlength="5" maxlength="255" type="password" matInput name="password"
+              placeholder="Password">
+            <mat-error *ngIf="password.invalid && password.errors.required">This field is required.</mat-error>
+            <mat-error *ngIf="password.invalid && password.errors.minlength">Password must be at least
+              {{password.errors.minlength.requiredLength}} charector.</mat-error>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-content>
+          <mat-form-field>
+            <input required #confirmPassword="ngModel" ngModel type="password" matInput name="confirmPassword"
+              placeholder="Confirm Password">
+            <mat-error *ngIf="(passwords.invalid && confirmPassword.touched) && passwords.errors?.match">Password
+              doesn't match</mat-error>
+          </mat-form-field>
+          <!-- <div class="alert alert-danger" *ngIf="passwords.invalid && passwords.errors?.match">Password doesn't match</div>
+          <mat-error *ngIf="(passwords.invalid && confirmPassword.touched) && passwords.errors?.match">Password doesn't
+            match</mat-error> -->
+        </mat-card-content>
+      </div>
+      <mat-card-content>
+        <button type="submit" [disabled]="f.invalid" mat-raised-button color="primary">Submit</button>
+      </mat-card-content>
+    </form>
+  </mat-card>
+
+</div>

@@ -17,7 +17,8 @@ export class EditCustomerComponent implements OnInit {
   oldCustomer;
   customer = {
     name: '',
-    phone: ''
+    phone: '',
+    isGold: false
   }
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,6 +35,7 @@ export class EditCustomerComponent implements OnInit {
       this.oldCustomer = this.data.customer;
       this.customer.name = this.data.customer.name;
       this.customer.phone = this.data.customer.phone;
+      this.customer.isGold = this.data.customer.isGold;
     }
   }
 
