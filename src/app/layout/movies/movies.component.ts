@@ -1,10 +1,11 @@
+import { CartService } from './../../services/cart.service';
 import { Movie } from './../../models/movie.model';
 import { GenresService } from 'src/app/services/genres.service';
 import { Component, OnInit } from '@angular/core';
 import { EditMovieComponent } from './edit-movie/edit-movie.component';
 import { MatDialog, MatSelectionList } from '@angular/material';
 
-import { MoviesService } from '../../services/movies.service'
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-movies',
@@ -20,7 +21,8 @@ export class MoviesComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private service: MoviesService,
-    private genreService: GenresService
+    private genreService: GenresService,
+    private cartService: CartService
   ) { }
 
   filterMovies(genres: MatSelectionList) {
@@ -30,28 +32,32 @@ export class MoviesComponent implements OnInit {
       this.movies = this.service.movies;
     }
 
-    if (genres.selectedOptions.selected.length == 0) return;
+    if (genres.selectedOptions.selected.length === 0) { return; }
 
-    let selected = genres.selectedOptions.selected.map(obj => obj.value);
+    const selected = genres.selectedOptions.selected.map(obj => obj.value);
 
     selected.forEach(_id => {
       this.movies = this.movies.filter((m: Movie) => {
-        let ids = m.genres.map(g => g._id);
-        return ids.includes(_id)
-      })
-    })
+        const ids = m.genres.map(g => g._id);
+        return ids.includes(_id);
+      });
+    });
 
   }
 
   demo(t) {
-    console.log(this.selectedGenres)
+    console.log(this.selectedGenres);
   }
 
   ngOnInit() {
-    this.service.getMovies()
-      .subscribe(movies => {
-        this.movies = movies;
-      })
+    // this.service.getMovies()
+    //   .subscribe(movies => {
+    //     this.movies = movies;
+    //   });
+    this.service.movies$.subscribe(movies=>{
+      this.movies = movies;
+    });
+    this.service.getMovies();
 
     this.genreService.$genres
       .subscribe(g => this.genres = g);
@@ -64,7 +70,7 @@ export class MoviesComponent implements OnInit {
         mode: 'Edit',
         movie: movie
       }
-    })
+    });
     this.movies = this.service.movies;
   }
 
@@ -73,12 +79,17 @@ export class MoviesComponent implements OnInit {
       data: {
         mode: 'Add'
       }
-    })
+    });
     this.movies = this.service.movies;
   }
 
   deleteMovie(movie) {
     this.service.deleteMovie(movie);
+  }
+
+  addToCart(movie) {
+    movie.onCart = true;
+    this.cartService.addToCart(movie);
   }
 
 }

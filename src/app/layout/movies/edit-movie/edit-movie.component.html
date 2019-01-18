@@ -5,13 +5,18 @@
 <mat-dialog-content>
   <form (ngSubmit)="submission()" #movieForm="ngForm">
     <mat-form-field>
-      <input type="text" [(ngModel)]="movie.title" matInput name="title" placeholder="Movie Name">
+      <input type="text" required minlength="5" #name="ngModel" [(ngModel)]="movie.title" matInput name="title" placeholder="Movie Name">
+      <mat-error *ngIf="name.invalid">
+        <span *ngIf="name.errors.required">Name is required.</span>
+        <span *ngIf="name.errors.minlength">Name should be atleast {{name.errors.minlength.requiredLength}}</span>
+      </mat-error>
     </mat-form-field>
     <div id="genre">
       <mat-form-field>
-        <mat-select name="genre" [(ngModel)]="movie.genreIds" multiple placeholder="Genre">
+        <mat-select required #genre="ngModel" name="genre" [(ngModel)]="movie.genreIds" multiple placeholder="Genre">
           <mat-option *ngFor="let genre of genres" [value]="genre._id">{{genre.name}}</mat-option>
         </mat-select>
+        <mat-error *ngIf="genre.invalid && genre.errors.required">You must select atleast one genre</mat-error>
       </mat-form-field>
       <button type="button" (click)="openAddGenreModal()" mat-mini-fab>
         <mat-icon>exposure_plus_1</mat-icon>
@@ -19,15 +24,17 @@
     </div>
 
     <mat-form-field>
-      <input type="number" [(ngModel)]="movie.numberInStock" matInput name="numberInStock" placeholder="Number in stock">
+      <input type="number" #nis="ngModel" required [(ngModel)]="movie.numberInStock" matInput name="numberInStock" placeholder="Number in stock">
+      <mat-error *ngIf="nis.invalid && nis.errors.required">Number in stock is required</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input type="number" [(ngModel)]="movie.dailyRentalRate" matInput name="dailyRentalRate" placeholder="Daily Rental Rate">
+      <input type="number" #drr="ngModel" required [(ngModel)]="movie.dailyRentalRate" matInput name="dailyRentalRate" placeholder="Daily Rental Rate">
+      <mat-error *ngIf="drr.invalid && drr.errors.required">Daily Rental Rate is required</mat-error>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align='end'>
   <button mat-dialog-close mat-raised-button>Cancel</button>
-  <button (click)="movieForm.ngSubmit.emit()" mat-raised-button color="primary">Save</button>
+  <button [disabled]="movieForm.invalid" (click)="movieForm.ngSubmit.emit()" mat-raised-button color="primary">Save</button>
 </mat-dialog-actions>

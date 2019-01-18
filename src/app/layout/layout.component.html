@@ -3,14 +3,17 @@
     <mat-icon>vertical_split</mat-icon>
   </button>
 
-
   <button id="userButton" mat-icon-button [matMenuTriggerFor]="user">
     <mat-icon>person</mat-icon>
   </button>
   <mat-menu #user="matMenu">
     <div class="menu-container">
-      <p><strong>{{me.name}}</strong></p>
-      <p><span>{{me.email}}</span></p>
+      <p>
+        <strong>{{ me?.name }}</strong>
+      </p>
+      <p>
+        <span>{{ me?.email }}</span>
+      </p>
       <button routerLink="/me" mat-button>View</button>
       <button routerLink="/me/edit" mat-button>Edit</button>
       <button (click)="logout()" mat-button>Log Out</button>
@@ -28,23 +31,35 @@
   </mat-menu>
 </mat-toolbar>
 
-
 <mat-drawer-container class="drawer-container" autosize>
   <mat-drawer #drawer class="sidenav" opened mode="side">
     <mat-action-list id="menu-list">
-      <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" pathMatch="full" routerLink="/"
-        mat-list-item> Dashboard </button>
-      <button mat-list-item routerLinkActive="active" routerLink="/movies"> Movies </button>
-      <button mat-list-item routerLinkActive="active" routerLink="/genres"> Genres </button>
-      <button mat-list-item routerLinkActive="active" routerLink="/customers"> Customers </button>
-      <button mat-list-item routerLinkActive="active" routerLink="/rentals"> Rentals </button>
-      <button mat-list-item routerLinkActive="active" routerLink="/users"> Users </button>
+      <button
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        pathMatch="full"
+        routerLink="/"
+        mat-list-item
+      >
+        Dashboard
+      </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/movies">
+        Movies
+      </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/genres">
+        Genres
+      </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/customers">
+        Customers
+      </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/rentals">
+        Rentals
+      </button>
+      <button mat-list-item routerLinkActive="active" routerLink="/users">
+        Users
+      </button>
     </mat-action-list>
   </mat-drawer>
 
-  <section class="content">
-    <router-outlet></router-outlet>
-
-  </section>
-
+  <section class="content"><router-outlet></router-outlet></section>
 </mat-drawer-container>

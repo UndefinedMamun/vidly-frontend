@@ -4,11 +4,11 @@
 
 <mat-dialog-content>
   <mat-form-field>
-    <input type="text" [(ngModel)]="genre.name" matInput placeholder="Genre Name">
+    <input type="text" required [(ngModel)]="genre.name" matInput placeholder="Genre Name">
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align='end'>
   <button mat-dialog-close mat-raised-button>Cancel</button>
-  <button (click)="submission()" mat-raised-button color="primary">Save</button>
+  <button [disabled]="genre.name.trim().length == 0" (click)="submission()" mat-raised-button color="primary">Save</button>
 </mat-dialog-actions>

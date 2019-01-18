@@ -32,6 +32,7 @@
           <p>Daily Rental Rate: <span>{{movie.dailyRentalRate}}</span></p>
         </mat-card-content>
         <mat-card-actions class="movie-actions">
+          <button *ngIf="movie.numberInStock && !movie.onCart" (click)="addToCart(movie)" mat-icon-button> <mat-icon>shopping_basket</mat-icon> </button>
           <button (click)="openMovieEditDialog(movie)" mat-raised-button class="btn-info">Edit</button>
           <button (click)="deleteMovie(movie)" mat-raised-button class="btn-danger">Delete</button>
         </mat-card-actions>
